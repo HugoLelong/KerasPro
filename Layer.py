@@ -33,3 +33,26 @@ class Layer:
     
     def getLayerIndex(self):
         return self.layerIndex
+    
+    def sigmoid(x):
+        return(1/(1+exp(-x)))
+    
+    def sigmoidprime(x):
+        s=sigmoid(x)
+        return (s*(1-s))
+    
+    def relu(x):
+        return max(0,x)
+    
+    def softmaxResults():
+        """Return a list of all the softmax probabilities"""
+        exponentialSum=0
+        exponentialList=[]
+        valueList=[]
+        for i in range(nbNeuron):
+            value=exp(self.neuronList()[i].getInputNeuron())
+            exponentialSum+=value
+            valueList.append(value)
+        exponentialList=[valueList[i]/exponentialSum for i in range(self.nbNeuron)]
+        return(exponentialList)
+            
