@@ -21,6 +21,7 @@ class Neuron:
         self.index = index
         self.bias = gauss(0,1)
         self.weightList = []
+        self.inputNeuron = 0
     
     def getLayer(self):
         return self.layer
@@ -33,6 +34,9 @@ class Neuron:
     
     def getWeightList(self):
         return self.weightList
+    
+    def getInputNeuron(self):
+        return self.inputNeuron
     
     def setBias(self, newBias):
         self.bias=newBias
