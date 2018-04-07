@@ -1,5 +1,3 @@
-import Neuron
-
 class Layer:
     """Class defining the layers found in a network:
         - its type (dense layer, Convolutional layer ...) called type
