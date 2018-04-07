@@ -13,3 +13,5 @@ class Network:
         self.learningRate=learningRate
         self.costFunction=costFunction
         self.weightecay=weightDecay
+    
+    

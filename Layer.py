@@ -1,3 +1,5 @@
+import Neuron
+
 class Layer:
     """Class defining the layers found in a network:
         - its type (dense layer, Convolutional layer ...) called type
@@ -17,4 +19,4 @@ class Layer:
         self.index=len(network.getLayerList(self.network))
         for j in range(self.nNeuron):
             myNeuron=Neuron(self,j)
-            neuronList.append(myNeuron)
+            self.neuronList.append(myNeuron)
