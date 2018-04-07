@@ -27,3 +27,12 @@ class Neuron:
     
     def getIndex(self):
         return self.index
+    
+    def getBias(self):
+        return self.bias
+    
+    def getWeightList(self):
+        return self.weightList
+    
+    def setBias(self, newBias):
+        self.bias=newBias

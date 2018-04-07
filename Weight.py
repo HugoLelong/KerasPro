@@ -17,3 +17,15 @@ class Weight:
         self.previousNeuron = previousNeuron
         self.nextNeuron = nextNeuron
         self.value = gauss(0,1)
+    
+    def getValue(self):
+        return self.value
+    
+    def getNextNeuron(self):
+        return(self.nextNeuron)
+    
+    def getPreviousNeuron(self):
+        return self.previousNeuron
+    
+    def setValue(self, newValue):
+        self.value=newValues
