@@ -1,4 +1,4 @@
-class Network:
+class Network(object):
     """Class defining the network to train
         - inputSize the size of the input
         - layerList a list of all the layers of the network
@@ -16,3 +16,12 @@ class Network:
     
     def getLayerList(self):
         return self.layerList
+    
+    def addLayer(self,nbNeuron):
+        self.layerList.append(Layer(1,1,nbNeuron,self))
+    
+    def initializeWeights(self):
+        for i in range(len(self.layerList)-1):
+            for j,previousNeuron in enumerate(self.layerList[i].neuronList):
+                for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
+                    previousNeuron.weightList.append(Weight(previousNeuron,nextNeuron))
