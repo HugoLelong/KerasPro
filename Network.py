@@ -14,4 +14,5 @@ class Network:
         self.costFunction=costFunction
         self.weightecay=weightDecay
     
-    
+    def getLayerList(self):
+        return self.layerList

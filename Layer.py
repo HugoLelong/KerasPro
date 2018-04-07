@@ -9,14 +9,14 @@ class Layer:
         - a network (in which this layer is) 
         - an index being the index of the layer in its network"""
     
-    def __init__(self, type, activationFunction, nNeuron, network):
+    def __init__(self, typeLayer, activationFunction, nNeuron, network):
         """neuronList is initialized as void, activationFunction is activationFun, the index is set refering to network"""
-        self.type=type
+        self.type=typeLayer
         self.neuronList=[]
         self.activationFun=activationFunction
         self.nNeuron=nNeuron
         self.network=network
-        self.index=len(network.getLayerList(self.network))
+        self.index=len(self.network.getLayerList())
         for j in range(self.nNeuron):
             myNeuron=Neuron(self,j)
             self.neuronList.append(myNeuron)
