@@ -22,6 +22,7 @@ class Neuron:
         self.bias = gauss(0,1)
         self.weightList = []
         self.inputNeuron = 0
+        self.outputNeuron = 0
     
     def getLayer(self):
         return self.layer
@@ -38,5 +39,35 @@ class Neuron:
     def getInputNeuron(self):
         return self.inputNeuron
     
+    def getOutputNeuron(self):
+        return self.outputNeuron
+    
     def setBias(self, newBias):
         self.bias=newBias
+        
+    def setInputNeuron(self, value):
+        self.inputNeuron = value
+
+    def setOutputNeuron(self, value):
+        self.outputNeuron = value
+        
+    def inputNeuronComputation(self):
+        """Compute z = wx + b if this neuron is not in the input layer
+        where w is the list of weights, x the list of input in the previous layer
+        and b is the bias"""
+        if(self.layer.getLayerIndex() != 0):
+            value = self.getBias()
+            for i,previousNeuron in enumerate(self.layer.getNetwork().getLayerList()[self.layer.getLayerIndex-1].getNeuronList()):
+                weight = 0
+                for j, objectWeight in enumerate(previousNeuron.getWeightList()):
+                    if(objectWeight.getNextNeuron().equals(self)):
+                        weight = objectWeight.getValue()
+                value += previousNeuron.getInputNeuron() * weight
+        
+        
+        
+        
+        
+        
+        
+        

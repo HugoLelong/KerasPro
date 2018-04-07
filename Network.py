@@ -9,7 +9,7 @@ class Network(object):
     
     def __init__(self, inputSize, learningRate, costFunction, weightDecay=None):
         self.inputSize=inputSize
-        self.layerList=[]
+        self.layerList=[Layer(1,2,self.inputSize,self)]
         self.learningRate=learningRate
         self.costFunction=costFunction
         self.weightDecay=weightDecay
