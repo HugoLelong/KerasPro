@@ -16,7 +16,7 @@ class Layer:
         self.activationFun=activationFunction
         self.nbNeuron=nbNeuron
         self.network=network
-        self.layerIndex=len(self.network.getLayerList())-1
+        self.layerIndex=len(self.network.getLayerList())
         for j in range(self.nbNeuron):
             myNeuron=Neuron(self,j)
             self.neuronList.append(myNeuron)
