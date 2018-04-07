@@ -57,12 +57,13 @@ class Neuron:
         and b is the bias"""
         if(self.layer.getLayerIndex() != 0):
             value = self.getBias()
-            for i,previousNeuron in enumerate(self.layer.getNetwork().getLayerList()[self.layer.getLayerIndex-1].getNeuronList()):
+            for i,previousNeuron in enumerate(self.layer.getNetwork().getLayerList()[self.layer.getLayerIndex()-1].getNeuronList()):
                 weight = 0
                 for j, objectWeight in enumerate(previousNeuron.getWeightList()):
-                    if(objectWeight.getNextNeuron().equals(self)):
+                    if(objectWeight.getNextNeuron() == self):
                         weight = objectWeight.getValue()
                 value += previousNeuron.getInputNeuron() * weight
+            self.setInputNeuron(value)
         
         
         
