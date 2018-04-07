@@ -1,3 +1,5 @@
+import numpy as np
+
 class Layer:
     """Class defining the layers found in a network:
         - its type (dense layer, Convolutional layer ...) called type
@@ -34,23 +36,29 @@ class Layer:
     def getLayerIndex(self):
         return self.layerIndex
     
-    def sigmoid(x):
+    def sigmoid(cls,x):
         return(1/(1+exp(-x)))
     
-    def sigmoidprime(x):
+    sigmoid=classmethod(sigmoid)
+    
+    def sigmoidprime(cls,x):
         s=sigmoid(x)
         return (s*(1-s))
+    
+    sigmoidprime=classmethod(sigmoidprime)
     
     def relu(x):
         return max(0,x)
     
-    def softmaxResults():
+    relu=classmethod(relu)
+    
+    def softmaxResults(self):
         """Return a list of all the softmax probabilities"""
         exponentialSum=0
         exponentialList=[]
         valueList=[]
-        for i in range(nbNeuron):
-            value=exp(self.neuronList()[i].getInputNeuron())
+        for i in range(self.nbNeuron):
+            value=np.exp(self.neuronList[i].getInputNeuron())
             exponentialSum+=value
             valueList.append(value)
         exponentialList=[valueList[i]/exponentialSum for i in range(self.nbNeuron)]
