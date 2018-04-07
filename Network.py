@@ -12,15 +12,28 @@ class Network(object):
         self.layerList=[]
         self.learningRate=learningRate
         self.costFunction=costFunction
-        self.weightecay=weightDecay
+        self.weightDecay=weightDecay
     
     def getLayerList(self):
         return self.layerList
     
+    def getInputSize(self):
+        return self.inputSize
+    
+    def getLearningRate(self):
+        return self.learningRate
+    
+    def getCostFunction(self):
+        return self.costFunction
+    
+    def getWeightDecay(self):
+        return self.weightDecay
+    
     def addLayer(self,nbNeuron):
-        self.layerList.append(Layer(1,1,nbNeuron,self))
+        self.getLayerList().append(Layer(1,1,nbNeuron,self))
     
     def initializeWeights(self):
+        """Create all the weights for a fully connected network"""
         for i in range(len(self.layerList)-1):
             for j,previousNeuron in enumerate(self.layerList[i].neuronList):
                 for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
