@@ -39,7 +39,7 @@ class Network(object):
         for i in range(len(self.layerList)-1):
             for j,previousNeuron in enumerate(self.layerList[i].neuronList):
                 for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
-                    previousNeuron.weightList.append(Weight(previousNeuron,nextNeuron))
+                    previousNeuron.getWeightList.append(Weight(previousNeuron,nextNeuron))
     
     
     def alterLabels(self,labels):
