@@ -16,5 +16,5 @@ class Layer:
         self.network=network
         self.index=len(network.getLayerList(self.network))
         for j in range(self.nNeuron):
-            myNeuron=Neuron(self.index,j)
+            myNeuron=Neuron(self,j)
             neuronList.append(myNeuron)
