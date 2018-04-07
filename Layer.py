@@ -18,3 +18,18 @@ class Layer:
         for j in range(self.nNeuron):
             myNeuron=Neuron(self,j)
             self.neuronList.append(myNeuron)
+    
+    def getType(self):
+        return self.type
+    
+    def getNeuronList(self):
+        return self.neuronList
+    
+    def getActivationFunction(self):
+        return self.activationFun
+    
+    def getNetwork(self):
+        return self.network
+    
+    def getIndex(self):
+        return self.index
