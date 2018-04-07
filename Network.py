@@ -7,7 +7,7 @@ class Network:
         - weightDecay the parameter for the regularization which is not compulsory
     """
     
-    def __init__(self, inputSize, learningRate, costFunction, weightDecay=None)
+    def __init__(self, inputSize, learningRate, costFunction, weightDecay=None):
         self.inputSize=inputSize
         self.layerList=[]
         self.learningRate=learningRate
