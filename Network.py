@@ -1,3 +1,4 @@
+import numpy as np
 class Network(object):
     """Class defining the network to train
         - inputSize the size of the input
@@ -41,20 +42,33 @@ class Network(object):
                     previousNeuron.weightList.append(Weight(previousNeuron,nextNeuron))
     
     
-    def alterLabels(labels):
+    def alterLabels(self,labels):
         l=[]
-        last
-        
+        nbLastNeurons=len(self.layerList[-1].getNeuronList())
+        for i in range(len(labels)):
+            l.append([])
+            for j in range(nbLastNeurons):
+                if (j==labels[i]):
+                    l[i].append(1)
+                else:
+                    l[i].append(0)
+        return(l)
+    
         
     def crossentropy(self,labels):
-        lastLayer=layerList[-1]
+        lastLayer=self.layerList[-1]
         neuronList=lastLayer.getNeuronList()
-        aList=[]
-        desi
-        for i,neuron in enumerate(neuronList):
-            aList.append(neuron.getOutputNeuron())
-            for n in range(len(labels)):
-                desiredOutput
+        aList=[0.1 for i in range(len(neuronList))]
+        desiredOutput=self.alterLabels(labels)
+        c=0
+        #for neuron in neuronList:
+           # aList.append(neuron.getOutputNeuron())
+        for i in range(len(labels)):
+            for j in range(len(neuronList)):
+                y=desiredOutput[i][j]
+                a=aList[j]
+                c+=y*np.log(a)+(1-y)*np.log(1-a)
+        return(c/len(labels))
         
             
         
