@@ -1,3 +1,5 @@
+from random import gauss
+
 # -*- coding: utf-8 -*-
 """
 Created on Sat Apr  7 15:33:19 2018
@@ -14,8 +16,8 @@ class Neuron:
     
     def __init__(self, layer, index, bias):
         """The list of weights is initialized with an empty list, 
-        we will create a weigth between each neuron later"""
+        we will create a weigth between each neuron later, the bias follows a gaussian lawS"""
         self.layer = layer
         self.index = index
-        self.bias = bias
+        self.bias = gauss(0,1)
         self.weightList = []
