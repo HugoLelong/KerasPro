@@ -38,3 +38,22 @@ class Network(object):
             for j,previousNeuron in enumerate(self.layerList[i].neuronList):
                 for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
                     previousNeuron.weightList.append(Weight(previousNeuron,nextNeuron))
+    
+    
+    def alterLabels(labels):
+        l=[]
+        last
+        
+        
+    def crossentropy(self,labels):
+        lastLayer=layerList[-1]
+        neuronList=lastLayer.getNeuronList()
+        aList=[]
+        desi
+        for i,neuron in enumerate(neuronList):
+            aList.append(neuron.getOutputNeuron())
+            for n in range(len(labels)):
+                desiredOutput
+        
+            
+        
