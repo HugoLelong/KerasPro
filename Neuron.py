@@ -14,7 +14,7 @@ class Neuron:
     - its bias
     - the list of its weights between this neuron and neurons in the next layer called weightList"""
     
-    def __init__(self, layer, index, bias):
+    def __init__(self, layer, index):
         """The list of weights is initialized with an empty list, 
         we will create a weigth between each neuron later, the bias follows a gaussian lawS"""
         self.layer = layer
