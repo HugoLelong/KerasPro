@@ -130,6 +130,14 @@ class Network(object):
                     for k in range(c):
                         neuronList[k*n*m+i*n+j]=image_input[i,j,k]
     
+    def feedforward(self, image_input):
+        self.firstLayerComputation(image_input)
+        for i,layer in enumerate(self.getLayerList()):
+            if(i!=0):
+                for j, neuron in enumerate(layer.getNeuronList()):
+                    neuron.inputComputation()
+                    neuron.outputComputation()
+    
     
     
     

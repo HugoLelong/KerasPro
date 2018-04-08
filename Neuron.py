@@ -65,7 +65,7 @@ class Neuron:
                 for j, objectWeight in enumerate(previousNeuron.getWeightList()):
                     if(objectWeight.getNextNeuron() == self):
                         weight = objectWeight.getValue()
-                value += previousNeuron.getInputNeuron() * weight
+                value += previousNeuron.getOutputNeuron() * weight
             self.setInputNeuron(value)
     
     def outputComputation(self):
