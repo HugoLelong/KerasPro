@@ -36,6 +36,7 @@ class Network(object):
         return self.weightDecay
    
     def addLayer(self, type, activationFunction, nbNeuron):
+        '''Adds the layer created using the given parameters, creates also the weigths linking the added layer to the previous one'''
         myLayer=ly.Layer(type,activationFunction,nbNeuron,self)
         self.layerList.append(myLayer)
         n=len(self.layerList)
@@ -45,14 +46,6 @@ class Network(object):
                 for j,currentNeuron in enumerate(previousNeurons):
                     currentNeuron.getWeightList().append(wei.Weight(previousNeuron,currentNeuron))
 
-    '''def initializeWeights(self):
-        """Create all the weights for a fully connected network"""
-        for i in range(len(self.layerList)-1):
-            for j,previousNeuron in enumerate(self.layerList[i].neuronList):
-                for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
-                    previousNeuron.getWeightList.append(wei.Weight(previousNeuron,nextNeuron))'''
-    
-    
     def alterLabels(self,labels):
         """Change the list of the labels into a matrix where matrix[i][j]=1 if the label of the ith example is j and 0 otherwise"""
         l=[]
@@ -122,7 +115,7 @@ class Network(object):
         return s
     
     def firstLayerComputation(self,image_input):
-        inputLayer=self.layerList[0]
+        """Compute all the weights from the image given in parameter as image_input, the weight is the value of the pixel (R,V or B)"""
         (a,b,c)=self.inputSize
         if (self.layerList[1].getType()=="Dense"):
             for i in range(a):
