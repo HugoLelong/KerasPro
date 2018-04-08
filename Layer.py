@@ -1,4 +1,5 @@
 import numpy as np
+from math import floor
 import Weight as wei
 import Neuron as neu
 import Network as net
@@ -70,7 +71,7 @@ class Layer:
     def toStringTab(self):
         s = []
         for i,neuron in enumerate(self.getNeuronList()):
-            s.append(str(float(neuron.getInputNeuron())) + " - " + str(float(neuron.getOutputNeuron())))
+            s.append(str(float(floor(neuron.getInputNeuron()*100)/100)) + " - " + str(float(floor(neuron.getOutputNeuron()*100/100))))
         return s
         
     def toString(self):
