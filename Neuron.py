@@ -54,7 +54,7 @@ class Neuron:
     def setOutputNeuron(self, value):
         self.outputNeuron = value
         
-    def inputNeuronComputation(self):
+    def inputComputation(self):
         """Compute z = wx + b if this neuron is not in the input layer
         where w is the list of weights, x the list of input in the previous layer
         and b is the bias"""
