@@ -39,12 +39,11 @@ class Network(object):
         '''Adds the layer created using the given parameters, creates also the weigths linking the added layer to the previous one'''
         myLayer=ly.Layer(type,activationFunction,nbNeuron,self)
         self.layerList.append(myLayer)
-        n=len(self.layerList)
         if (type=="Dense"):
             previousNeurons=self.layerList[-2].getNeuronList()
-            for i, previousNeuron in enumerate(myLayer.getNeuronList()):
-                for j,currentNeuron in enumerate(previousNeurons):
-                    currentNeuron.getWeightList().append(wei.Weight(previousNeuron,currentNeuron))
+            for i, previousNeuron in enumerate(previousNeurons):
+                for j,nextNeuron in enumerate(myLayer.getNeuronList()):
+                    previousNeuron.getWeightList().append(wei.Weight(previousNeuron,nextNeuron))
 
     def alterLabels(self,labels):
         """Change the list of the labels into a matrix where matrix[i][j]=1 if the label of the ith example is j and 0 otherwise"""
@@ -121,7 +120,8 @@ class Network(object):
             for i in range(a):
                 for j in range(b):
                     for k in range(c):
-                        self.layerList[0].getNeuronList()[k*a*b+i*a+j].setOutputNeuron(image_input[i][j][k])
+                        print(i,j,k)
+                        self.layerList[0].getNeuronList()[k*a*b+i*b+j].setOutputNeuron(image_input[i][j][k])
     
     def feedforward(self, image_input):
         self.firstLayerComputation(image_input)

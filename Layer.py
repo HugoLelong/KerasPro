@@ -71,7 +71,7 @@ class Layer:
     def toStringTab(self):
         s = []
         for i,neuron in enumerate(self.getNeuronList()):
-            s.append(str(float(floor(neuron.getInputNeuron()*100)/100)) + " - " + str(float(floor(neuron.getOutputNeuron()*100/100))))
+            s.append(str(float(neuron.getInputNeuron())) + " - " + str(float(neuron.getOutputNeuron())))
         return s
         
     def toString(self):
