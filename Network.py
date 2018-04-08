@@ -92,13 +92,28 @@ class Network(object):
         c=c/(2*len(neuronList))
         return(c)
         
-    def toString(self):
+    def toStringTab(self):
         """Return a string which represents the network"""
+        sTab = self.getLayerList()[0].toStringTab()
+        for i,layer in enumerate(self.getLayerList()):
+            if(i!=0):
+                sTabLayer = layer.toStringTab()
+                for j in range(len(sTabLayer)):
+                    if(j < len(sTab)):
+                        sTab[j] += "     " + sTabLayer[j]
+                    else:
+                        sTab.append("              "*i + sTabLayer[j])
+                if(len(sTabLayer) < len(sTab)):
+                    for k in range(len(sTabLayer),len(sTab)):
+                        sTab[k] += "              "
+        return sTab
+    
+    def toString(self):
+        sTab = self.toStringTab()
         s = ""
-        
+        for i in range(len(sTab)):
+            s += sTab[i] + "\n\n"
         return s
-    
-    
     
     
     

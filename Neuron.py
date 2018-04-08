@@ -24,8 +24,8 @@ class Neuron:
         self.index = index
         self.bias = gauss(0,1)
         self.weightList = []
-        self.inputNeuron = 0
-        self.outputNeuron = 0
+        self.inputNeuron = 0.0
+        self.outputNeuron = 0.0
     
     def getLayer(self):
         return self.layer
