@@ -5,7 +5,7 @@ import Neuron as neu
 
 class Network(object):
     """Class defining the network to train
-        - inputSize the size of the input
+        - inputSize the size of the input as (a,b,c)
         - layerList a list of all the layers of the network
         - learningRate the speed of learning
         - costFunction the cost function
@@ -15,7 +15,7 @@ class Network(object):
     def __init__(self, inputSize, learningRate, costFunction, weightDecay=None):
         self.inputSize=inputSize
         self.layerList=[]
-        self.layerList.append(ly.Layer("input","sigmoid",self.inputSize,self))
+        self.layerList.append(ly.Layer("input","sigmoid",self.inputSize[0]*self.inputSize[1]*self.inputSize[2],self))
         self.learningRate=learningRate
         self.costFunction=costFunction
         self.weightDecay=weightDecay
@@ -38,13 +38,18 @@ class Network(object):
     def addLayer(self, type, activationFunction, nbNeuron):
         myLayer=ly.Layer(type,activationFunction,nbNeuron,self)
         self.layerList.append(myLayer)
+        i=len(self.layerList)-2
+        for j,previousNeuron in enumerate(self.layerList[i].neuronList):
+            for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
+                previousNeuron.getWeightList().append(wei.Weight(previousNeuron,nextNeuron))
+        
 
-    def initializeWeights(self):
+    '''def initializeWeights(self):
         """Create all the weights for a fully connected network"""
         for i in range(len(self.layerList)-1):
             for j,previousNeuron in enumerate(self.layerList[i].neuronList):
                 for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
-                    previousNeuron.getWeightList.append(wei.Weight(previousNeuron,nextNeuron))
+                    previousNeuron.getWeightList.append(wei.Weight(previousNeuron,nextNeuron))'''
     
     
     def alterLabels(self,labels):
@@ -115,6 +120,15 @@ class Network(object):
             s += sTab[i] + "\n\n"
         return s
     
+    def firstLayerComputation(self,image_input):
+        inputLayer=self.layerList[0]
+        neuronList=inputLayer.getNeuronList()
+        (a,b,c)=self.inputSize
+        if (self.layerList[1]=="Dense"):
+            for i in range(a):
+                for j in range(b):
+                    for k in range(c):
+                        neuronList[k*n*m+i*n+j]=image_input[i,j,k]
     
     
     
