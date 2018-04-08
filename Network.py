@@ -34,10 +34,10 @@ class Network(object):
     
     def getWeightDecay(self):
         return self.weightDecay
-    
+   
     def addLayer(self,nbNeuron):
         self.getLayerList().append(ly.Layer(1,1,nbNeuron,self))
-    
+
     def initializeWeights(self):
         """Create all the weights for a fully connected network"""
         for i in range(len(self.layerList)-1):
