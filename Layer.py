@@ -67,4 +67,15 @@ class Layer:
         exponentialList=[valueList[i]/exponentialSum for i in range(self.nbNeuron)]
         return(exponentialList)
 
-            
+    def toString(self):
+        s = ""
+        for i,neuron in enumerate(self.getNeuronList()):
+            s += str(neuron.getInputNeuron()) + " - " + str(neuron.getOutputNeuron()) + "\n\n"
+        return s
+        
+        
+        
+        
+        
+        
+        
