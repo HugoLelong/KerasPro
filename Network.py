@@ -123,7 +123,6 @@ class Network(object):
     
     def firstLayerComputation(self,image_input):
         inputLayer=self.layerList[0]
-        neuronList=inputLayer.getNeuronList()
         (a,b,c)=self.inputSize
         if (self.layerList[1].getType()=="Dense"):
             for i in range(a):
