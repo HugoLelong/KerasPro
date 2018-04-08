@@ -47,7 +47,7 @@ class Network(object):
     
     
     def alterLabels(self,labels):
-        """Change the list of the labeld=s in a matrix where matrix[i][j]=1 if the label of the ith example is j and 0 otherwise"""
+        """Change the list of the labels into a matrix where matrix[i][j]=1 if the label of the ith example is j and 0 otherwise"""
         l=[]
         nbLastNeurons=len(self.layerList[-1].getNeuronList())
         for i in range(len(labels)):
@@ -61,7 +61,7 @@ class Network(object):
     
         
     def crossentropy(self,labels):
-        """Return the cost calculated upon the crossentropy cost function, take in argument the list of the labels"""
+        """Returns the cost calculated upon the crossentropy cost function, takes in argument the list of the labels"""
         lastLayer=self.layerList[-1]
         neuronList=lastLayer.getNeuronList()
         aList=[]
@@ -75,6 +75,18 @@ class Network(object):
                 a=aList[j]
                 c+=y*np.log(a)+(1-y)*np.log(1-a)
         return(c/len(labels))
-        
-            
-        
+    
+    def meanSquare(self,labels):
+        """Return the cost calcuated upon the mean square cost function, takes in argument the list of the labels"""
+        lastLayer=self.layerList[-1]
+        neuronList=lastLayer.getNeuronList()
+        aList=[]
+        desiredOutput=self.alterLabels(labels)
+        for neuron in neuronList:
+            aList.append(neuron.getOutputNeuron())
+        c=0
+        for i in range(len(labels)):
+            for j in range(len(neuronList)):
+                c+=(desiredOutput[i][j]-aList[j])**2
+        c=c/(2*len(neuronList))
+        return(c)
