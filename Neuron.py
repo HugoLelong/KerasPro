@@ -77,8 +77,7 @@ class Neuron:
         elif(activationFun=="softmax"):
             self.outputNeuron=self.layer.softmaxResults()[self.index]
         return(self.outputNeuron)
-        
-        
+
         
         
         
