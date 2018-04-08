@@ -15,7 +15,7 @@ class Network(object):
     def __init__(self, inputSize, learningRate, costFunction, weightDecay=None):
         self.inputSize=inputSize
         self.layerList=[]
-        self.layerList.append(ly.Layer(1,"sigmoid",self.inputSize,self))
+        self.layerList.append(ly.Layer("input","sigmoid",self.inputSize,self))
         self.learningRate=learningRate
         self.costFunction=costFunction
         self.weightDecay=weightDecay
@@ -90,3 +90,19 @@ class Network(object):
                 c+=(desiredOutput[i][j]-aList[j])**2
         c=c/(2*len(neuronList))
         return(c)
+        
+    def toString(self):
+        """Return a string which represents the network"""
+        s = ""
+        
+        return s
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
