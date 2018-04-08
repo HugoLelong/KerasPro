@@ -37,7 +37,7 @@ class Layer:
         return self.layerIndex
     
     def sigmoid(cls,x):
-        return(1/(1+exp(-x)))
+        return(1/(1+np.exp(-x)))
     
     sigmoid=classmethod(sigmoid)
     
@@ -47,7 +47,7 @@ class Layer:
     
     sigmoidprime=classmethod(sigmoidprime)
     
-    def relu(x):
+    def relu(cls,x):
         return max(0,x)
     
     relu=classmethod(relu)
@@ -63,4 +63,5 @@ class Layer:
             valueList.append(value)
         exponentialList=[valueList[i]/exponentialSum for i in range(self.nbNeuron)]
         return(exponentialList)
+
             

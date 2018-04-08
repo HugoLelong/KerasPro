@@ -64,6 +64,16 @@ class Neuron:
                         weight = objectWeight.getValue()
                 value += previousNeuron.getInputNeuron() * weight
             self.setInputNeuron(value)
+    
+    def outputComputation(self):
+        activationFun=self.layer.getActivationFunction()
+        if(activationFun=="sigmoid"):
+            self.outputNeuron=Layer.sigmoid(self.inputNeuron)
+        elif(activationFun=="relu"):
+            self.outputNeuron=Layer.relu(self.inputNeuron)
+        elif(activationFun=="softmax"):
+            self.outputNeuron=self.layer.softmaxResults()[self.index]
+        return(self.outputNeuron)
         
         
         
