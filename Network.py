@@ -38,11 +38,12 @@ class Network(object):
     def addLayer(self, type, activationFunction, nbNeuron):
         myLayer=ly.Layer(type,activationFunction,nbNeuron,self)
         self.layerList.append(myLayer)
-        i=len(self.layerList)-2
-        for j,previousNeuron in enumerate(self.layerList[i].neuronList):
-            for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
-                previousNeuron.getWeightList().append(wei.Weight(previousNeuron,nextNeuron))
-        
+        n=len(self.layerList)
+        if (type=="Dense"):
+            previousNeurons=self.layerList[-2].getNeuronList()
+            for i, previousNeuron in enumerate(myLayer.getNeuronList()):
+                for j,currentNeuron in enumerate(previousNeurons):
+                    currentNeuron.getWeightList().append(wei.Weight(previousNeuron,currentNeuron))
 
     '''def initializeWeights(self):
         """Create all the weights for a fully connected network"""
@@ -124,11 +125,11 @@ class Network(object):
         inputLayer=self.layerList[0]
         neuronList=inputLayer.getNeuronList()
         (a,b,c)=self.inputSize
-        if (self.layerList[1]=="Dense"):
+        if (self.layerList[1].getType()=="Dense"):
             for i in range(a):
                 for j in range(b):
                     for k in range(c):
-                        neuronList[k*n*m+i*n+j]=image_input[i,j,k]
+                        self.layerList[0].getNeuronList()[k*a*b+i*a+j].setOutputNeuron(image_input[i][j][k])
     
     def feedforward(self, image_input):
         self.firstLayerComputation(image_input)
