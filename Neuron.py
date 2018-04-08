@@ -1,4 +1,7 @@
 from random import gauss
+import Layer as ly
+import Network as net
+import Weight as wei
 
 # -*- coding: utf-8 -*-
 """
@@ -68,9 +71,9 @@ class Neuron:
     def outputComputation(self):
         activationFun=self.layer.getActivationFunction()
         if(activationFun=="sigmoid"):
-            self.outputNeuron=Layer.sigmoid(self.inputNeuron)
+            self.outputNeuron=ly.Layer.sigmoid(self.inputNeuron)
         elif(activationFun=="relu"):
-            self.outputNeuron=Layer.relu(self.inputNeuron)
+            self.outputNeuron=ly.Layer.relu(self.inputNeuron)
         elif(activationFun=="softmax"):
             self.outputNeuron=self.layer.softmaxResults()[self.index]
         return(self.outputNeuron)

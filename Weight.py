@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
+
 """
 Created on Sat Apr  7 15:57:02 2018
 
 @author: Hugo
 """
 from random import gauss
+import Neuron as neu
+import Network as net
+import Layer as ly
 
 class Weight:
     """Class which defines the link between two neurons. It is composed of:

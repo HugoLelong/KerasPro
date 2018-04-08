@@ -1,4 +1,7 @@
 import numpy as np
+import Weight as wei
+import Neuron as neu
+import Network as net
 
 class Layer:
     """Class defining the layers found in a network:
@@ -18,7 +21,7 @@ class Layer:
         self.network=network
         self.layerIndex=len(self.network.getLayerList())
         for j in range(self.nbNeuron):
-            myNeuron=Neuron(self,j)
+            myNeuron=neu.Neuron(self,j)
             self.neuronList.append(myNeuron)
     
     def getType(self):

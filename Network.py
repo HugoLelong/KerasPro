@@ -1,4 +1,8 @@
 import numpy as np
+import Layer as ly
+import Weight as wei
+import Neuron as neu
+
 class Network(object):
     """Class defining the network to train
         - inputSize the size of the input
@@ -11,7 +15,7 @@ class Network(object):
     def __init__(self, inputSize, learningRate, costFunction, weightDecay=None):
         self.inputSize=inputSize
         self.layerList=[]
-        self.layerList.append(Layer(1,2,self.inputSize,self))
+        self.layerList.append(ly.Layer(1,2,self.inputSize,self))
         self.learningRate=learningRate
         self.costFunction=costFunction
         self.weightDecay=weightDecay
@@ -32,14 +36,14 @@ class Network(object):
         return self.weightDecay
     
     def addLayer(self,nbNeuron):
-        self.getLayerList().append(Layer(1,1,nbNeuron,self))
+        self.getLayerList().append(ly.Layer(1,1,nbNeuron,self))
     
     def initializeWeights(self):
         """Create all the weights for a fully connected network"""
         for i in range(len(self.layerList)-1):
             for j,previousNeuron in enumerate(self.layerList[i].neuronList):
                 for k,nextNeuron in enumerate(self.layerList[i+1].neuronList):
-                    previousNeuron.getWeightList.append(Weight(previousNeuron,nextNeuron))
+                    previousNeuron.getWeightList.append(wei.Weight(previousNeuron,nextNeuron))
     
     
     def alterLabels(self,labels):
