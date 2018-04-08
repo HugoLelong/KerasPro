@@ -45,7 +45,7 @@ class Layer:
     sigmoid=classmethod(sigmoid)
     
     def sigmoidprime(cls,x):
-        s=sigmoid(x)
+        s=Layer.sigmoid(x)
         return (s*(1-s))
     
     sigmoidprime=classmethod(sigmoidprime)

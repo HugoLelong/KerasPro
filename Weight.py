@@ -32,4 +32,4 @@ class Weight:
         return self.previousNeuron
     
     def setValue(self, newValue):
-        self.value=newValues
+        self.value=newValue
