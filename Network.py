@@ -2,6 +2,8 @@ import numpy as np
 import Layer as ly
 import Weight as wei
 import Neuron as neu
+from math import floor
+import random
 
 class Network(object):
     """Class defining the network to train
@@ -131,7 +133,56 @@ class Network(object):
                     neuron.inputComputation()
                     neuron.outputComputation()
     
+    def backpropagate(self):
+        """Function to complete to make the backpropagation of the information, the cost function are coded above (meanSquare and crossentropy), if you want to add parameters think to add them in train too"""
+        pass
     
+    def prediction(self,image):
+        """Function which computes the prediction of class the image was in given the image (parameter image). The output is the index of the neuron which gave the greatest value. If the labels where coded with a serie of following numbers beginning by 0, it is also the class of the image."""
+        lastLayer=self.layerList[-1]
+        outputValues=[]
+        for neuron in lastLayer.getNeuronList():
+            outputValues.append(neuron.getOutputNeuron())
+        M=0
+        indexM=-1
+        for j,value in enumerate(outputValues):
+            if value>M:
+                M=value
+                indexM=j
+        return(indexM)
+    
+    def train(self,imageTrainSet,labelTrainSet,nbEpochs,batchSize,validationData=None):
+        """Function used to train the network, the parameters are the total list of images, the LIST of the labels, the number of epochs, the batch size (must be less than the number of train images) and the validation data as a tuple (validationImages, validationLabels). If not put, it is None and not taken into account. The outputs are the number of true predictions (for the train set and the validation set) per epoch in two different lists."""
+        imageBatchSize=[]
+        labelBatchSize=[]
+        trueGuessList=[]
+        trueGuessValList=[]
+        for i in range(nbEpochs):
+            while (len(imageBatchSize)<batchSize):
+                n=random.randint(0,len(imageTrainSet)-1)
+                if imageTrainSet[n] not in imageBatchSize:
+                    imageBatchSize.append(imageTrainSet[n])
+                    labelBatchSize.append(labelTrainSet[n])
+            trueGuess=0
+            for j,image in enumerate(imageBatchSize):
+                print(image)
+                self.feedforward(image)
+                if self.prediction(image)==labelBatchSize[j]:
+                    trueGuess+=1
+            self.backpropagate()
+            trueGuessList.append(trueGuess)
+            if(validationData!=None):
+                trueGuessVal=0
+                (imageValidationList,labelValidationList)=validationData
+                for k,imageVal in enumerate(imageValidation):
+                    self.feedforward(imageVal)
+                    if(self.prediction(imageVal)==labelValidationList[k]):
+                        trueGuessVal+=1
+                trueGuessValList.append(trueGuessVal)
+        return(trueGuessList,trueGuessValList)
+            
+        
+        
     
     
     
