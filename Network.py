@@ -102,10 +102,10 @@ class Network(object):
                     if(j < len(sTab)):
                         sTab[j] += "     " + sTabLayer[j]
                     else:
-                        sTab.append("              "*i + sTabLayer[j])
+                        sTab.append("                "*i + sTabLayer[j])
                 if(len(sTabLayer) < len(sTab)):
                     for k in range(len(sTabLayer),len(sTab)):
-                        sTab[k] += "              "
+                        sTab[k] += "                "
         return sTab
     
     def toString(self):
@@ -122,7 +122,6 @@ class Network(object):
             for i in range(a):
                 for j in range(b):
                     for k in range(c):
-                        print(i,j,k)
                         self.layerList[0].getNeuronList()[k*a*b+i*b+j].setOutputNeuron(image_input[i][j][k])
     
     def feedforward(self, image_input):

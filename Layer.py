@@ -3,6 +3,7 @@ from math import floor
 import Weight as wei
 import Neuron as neu
 import Network as net
+from decimal import *
 
 class Layer:
     """Class defining the layers found in a network:
@@ -71,7 +72,7 @@ class Layer:
     def toStringTab(self):
         s = []
         for i,neuron in enumerate(self.getNeuronList()):
-            s.append(str(float(neuron.getInputNeuron())) + " - " + str(float(neuron.getOutputNeuron())))
+            s.append(str(Decimal(neuron.getInputNeuron()).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)) + " - " + str(Decimal(neuron.getOutputNeuron()).quantize(Decimal('.01'), rounding=ROUND_HALF_UP)))
         return s
         
     def toString(self):
