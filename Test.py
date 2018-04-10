@@ -10,5 +10,5 @@ def test():
     network.addLayer("Dense","sigmoid",7)
     network.addLayer("Dense","sigmoid",10)
     network.feedforward([[[0.2]],[[1.4]],[[2.1]],[[0.7]],[[0.9]]])
-    
+    print(network.prediction([[[0.2]],[[1.4]],[[2.1]],[[0.7]],[[0.9]]]))
     print(network.toString())

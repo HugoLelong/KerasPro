@@ -133,11 +133,16 @@ class Network(object):
                     neuron.outputComputation()
     
     def backpropagate(self):
-        """Function to complete to make the backpropagation of the information, the cost function are coded above (meanSquare and crossentropy), if you want to add parameters think to add them in train too"""
+        """Function to complete to make the backpropagation of the information, 
+        the cost function are coded above (meanSquare and crossentropy),
+        if you want to add parameters think to add them in train too"""
         pass
     
     def prediction(self,image):
-        """Function which computes the prediction of class the image was in given the image (parameter image). The output is the index of the neuron which gave the greatest value. If the labels where coded with a serie of following numbers beginning by 0, it is also the class of the image."""
+        """Function which computes in which class the image was in, given the image (parameter image). 
+        The output is the index of the neuron which gave the greatest value. 
+        If the labels where coded with a serie of following numbers beginning by 0, 
+        it is also the class of the image."""
         lastLayer=self.layerList[-1]
         outputValues=[]
         for neuron in lastLayer.getNeuronList():
@@ -151,7 +156,11 @@ class Network(object):
         return(indexM)
     
     def train(self,imageTrainSet,labelTrainSet,nbEpochs,batchSize,validationData=None):
-        """Function used to train the network, the parameters are the total list of images, the LIST of the labels, the number of epochs, the batch size (must be less than the number of train images) and the validation data as a tuple (validationImages, validationLabels). If not put, it is None and not taken into account. The outputs are the number of true predictions (for the train set and the validation set) per epoch in two different lists."""
+        """Function used to train the network, the parameters are the total list of images,
+        the LIST of labels, the number of epochs, the batch size (must be less than the number 
+        of training images) and the validation data as a tuple (validationImages, validationLabels). 
+        If not put, it is None and not taken into account. The outputs is the number of true 
+        predictions (for the training set and the validation set) per epoch in two different lists."""
         imageBatchSize=[]
         labelBatchSize=[]
         trueGuessList=[]
@@ -173,7 +182,7 @@ class Network(object):
             if(validationData!=None):
                 trueGuessVal=0
                 (imageValidationList,labelValidationList)=validationData
-                for k,imageVal in enumerate(imageValidation):
+                for k,imageVal in enumerate(imageValidationList):
                     self.feedforward(imageVal)
                     if(self.prediction(imageVal)==labelValidationList[k]):
                         trueGuessVal+=1
