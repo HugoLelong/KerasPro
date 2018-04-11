@@ -41,6 +41,9 @@ class Layer:
     def getLayerIndex(self):
         return self.layerIndex
     
+    def getNbNeuron(self):
+        return self.nbNeuron
+    
     def sigmoid(cls,x):
         return(1/(1+np.exp(-x)))
     

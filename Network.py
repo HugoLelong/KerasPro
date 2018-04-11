@@ -76,9 +76,14 @@ class Network(object):
                 a=aList[j]
                 c+=y*np.log(a)+(1-y)*np.log(1-a)
         return(c/len(labels))
+        
+    def crossentropyDerivative(self, label):
+        """TO DO"""
+        pass
+            
     
     def meanSquare(self,labels):
-        """Return the cost calcuated upon the mean square cost function, takes in argument the list of the labels"""
+        """Return the cost calcuated upon the mean square cost function, takes in argument the list of labels"""
         lastLayer=self.layerList[-1]
         neuronList=lastLayer.getNeuronList()
         aList=[]
@@ -91,6 +96,12 @@ class Network(object):
                 c+=(desiredOutput[i][j]-aList[j])**2
         c=c/(2*len(neuronList))
         return(c)
+        
+    def meanSquareDerivative(self,labels):
+        result = [0 for i in range(len(self.getLayerList()[-1].getNeuronList()))]
+        for i, neuron in enumerate(self.getLayerList()[-1].getNeuronList()):
+            result[i] = neuron.getOutputNeuron() - labels[i]
+        return result
         
     def toStringTab(self):
         """Return a string which represents the network"""
@@ -132,14 +143,54 @@ class Network(object):
                     neuron.inputComputation()
                     neuron.outputComputation()
     
-    def backpropagate(self):
+    def backpropagate(self, imageBatch, imageBatchLabel):
         """Function to complete to make the backpropagation of the information, 
         the cost function are coded above (meanSquare and crossentropy),
         if you want to add parameters think to add them in train too"""
-        pass
-    
+        error = [ [[] for j in range(self.getLayerList()[i].getNbNeuron())] for i in range(1,len(self.getLayerList()))]
+        for i, image in enumerate(imageBatch):
+            self.feedforward(image)
+            
+            #Construction of the weight matrix (without the weights between first and second layers)
+            weightMatrix = [0 for i in range(len(self.getLayerList())-2)]
+            for i in range(len(self.getLayerList())-2):
+                weightMatrix[i] = np.zeros([len(self.getLayerList()[i+2].getNeuronList()), len(self.getLayerList()[i+1].getNeuronList())])
+                for j in range(len(self.getLayerList()[i+2].getNeuronList())):
+                    for k in range(len(self.getLayerList()[i+1].getNeuronList())):
+                        weightMatrix[i][k][j] = self.getLayerList()[i+1].getNeuronList()[j].getWeightList()[k].getValue()
+            
+            #Error last layer
+            gradientCostFunction = 0
+            if(self.getCostFunction() == "crossentropy"):
+                print("not programmed yet")
+            if(self.getCostFunction() == "meanSquare"):
+                gradientCostFunction = self.meanSquareDerivative(imageBatchLabel[i])
+                
+            for j, neuron in enumerate(self.getLayerList()[-1].getNeuronList()):
+                if(self.getLayerList()[-1].getActivationFunction() == "relu"):
+                    print("not programmed yet")
+                if(self.getLayerList()[-1].getActivationFunction() == "softmax"):
+                    print("not programmed yet")
+                if(self.getLayerList()[-1].getActivationFunction() == "sigmoid"):
+                    activationFunctionDer = ly.Layer.sigmoidprime(neuron.getInputNeuron())
+                
+                error[len(error)-1][j] = gradientCostFunction[j] * activationFunctionDer
+            
+            #Error other layers
+            for j in range(len(error)-2, -1,-1):
+                temp = (np.transpose(weightMatrix[j])).dot(error[j+1])
+                for k, neuron in enumerate(self.getLayerList()[j].getNeuronList()):
+                    if(self.getLayerList()[j].getActivationFunction() == "relu"):
+                        print("not programmed yet")
+                    if(self.getLayerList()[j].getActivationFunction() == "softmax"):
+                        print("not programmed yet")
+                    if(self.getLayerList()[j].getActivationFunction() == "sigmoid"):
+                        activationFunctionDer = ly.Layer.sigmoidprime(neuron.getInputNeuron())
+                    error[j][k] = temp[k] * activationFunctionDer
+            
+            
     def prediction(self,image):
-        """Function which computes in which class the image was in, given the image (parameter image). 
+        """Function which computes in which class the image is, given the image (parameter image). 
         The output is the index of the neuron which gave the greatest value. 
         If the labels where coded with a serie of following numbers beginning by 0, 
         it is also the class of the image."""
