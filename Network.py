@@ -147,24 +147,32 @@ class Network(object):
         """Function to complete to make the backpropagation of the information, 
         the cost function are coded above (meanSquare and crossentropy),
         if you want to add parameters think to add them in train too"""
-        error = [ [[] for j in range(self.getLayerList()[i].getNbNeuron())] for i in range(1,len(self.getLayerList()))]
-        for i, image in enumerate(imageBatch):
+        error = [[ [[] for j in range(self.getLayerList()[i].getNbNeuron())] for i in range(1,len(self.getLayerList()))] for i in range(len(imageBatch))]
+
+        activationList = [[[0 for k in range(len(self.getLayerList()[j].getNeuronList()))] for j in range(len(self.getLayerList())-1)] for i in range(len(imageBatch))]
+
+        #Construction of the weight matrix
+        weightMatrix = [0 for i in range(len(self.getLayerList())-1)]
+        for i in range(len(self.getLayerList())-1):
+            weightMatrix[i] = np.zeros([len(self.getLayerList()[i+1].getNeuronList()), len(self.getLayerList()[i].getNeuronList())])
+            for j in range(len(self.getLayerList()[i+1].getNeuronList())):
+                for k in range(len(self.getLayerList()[i].getNeuronList())):
+                    weightMatrix[i][j][k] = self.getLayerList()[i].getNeuronList()[k].getWeightList()[j].getValue()
+        
+        for h, image in enumerate(imageBatch):
             self.feedforward(image)
             
-            #Construction of the weight matrix (without the weights between first and second layers)
-            weightMatrix = [0 for i in range(len(self.getLayerList())-2)]
-            for i in range(len(self.getLayerList())-2):
-                weightMatrix[i] = np.zeros([len(self.getLayerList()[i+2].getNeuronList()), len(self.getLayerList()[i+1].getNeuronList())])
-                for j in range(len(self.getLayerList()[i+2].getNeuronList())):
-                    for k in range(len(self.getLayerList()[i+1].getNeuronList())):
-                        weightMatrix[i][k][j] = self.getLayerList()[i+1].getNeuronList()[j].getWeightList()[k].getValue()
-            
+            #construction of the activation list
+            for i in range(len(self.getLayerList())-1):
+                for j,neuron in enumerate(self.getLayerList()[i].getNeuronList()):
+                    activationList[h][i][j] = neuron.getOutputNeuron()
+                    
             #Error last layer
             gradientCostFunction = 0
             if(self.getCostFunction() == "crossentropy"):
                 print("not programmed yet")
             if(self.getCostFunction() == "meanSquare"):
-                gradientCostFunction = self.meanSquareDerivative(imageBatchLabel[i])
+                gradientCostFunction = self.meanSquareDerivative(imageBatchLabel[h])
                 
             for j, neuron in enumerate(self.getLayerList()[-1].getNeuronList()):
                 if(self.getLayerList()[-1].getActivationFunction() == "relu"):
@@ -173,22 +181,37 @@ class Network(object):
                     print("not programmed yet")
                 if(self.getLayerList()[-1].getActivationFunction() == "sigmoid"):
                     activationFunctionDer = ly.Layer.sigmoidprime(neuron.getInputNeuron())
-                
-                error[len(error)-1][j] = gradientCostFunction[j] * activationFunctionDer
+                error[h][len(error[h])-1][j] = gradientCostFunction[j] * activationFunctionDer
             
             #Error other layers
-            for j in range(len(error)-2, -1,-1):
-                temp = (np.transpose(weightMatrix[j])).dot(error[j+1])
-                for k, neuron in enumerate(self.getLayerList()[j].getNeuronList()):
-                    if(self.getLayerList()[j].getActivationFunction() == "relu"):
+            for j in range(len(error[h])-2, -1,-1):
+                temp = (np.transpose(weightMatrix[j+1])).dot(error[h][j+1])
+                for k, neuron in enumerate(self.getLayerList()[j+1].getNeuronList()):
+                    if(self.getLayerList()[j+1].getActivationFunction() == "relu"):
                         print("not programmed yet")
-                    if(self.getLayerList()[j].getActivationFunction() == "softmax"):
+                    if(self.getLayerList()[j+1].getActivationFunction() == "softmax"):
                         print("not programmed yet")
-                    if(self.getLayerList()[j].getActivationFunction() == "sigmoid"):
+                    if(self.getLayerList()[j+1].getActivationFunction() == "sigmoid"):
                         activationFunctionDer = ly.Layer.sigmoidprime(neuron.getInputNeuron())
-                    error[j][k] = temp[k] * activationFunctionDer
-            
-            
+                    error[h][j][k] = temp[k] * activationFunctionDer
+
+        #Updating bias
+        for i,layer in enumerate(self.getLayerList()):
+            if(i!=0):
+                for j,neuron in enumerate(layer.getNeuronList()):
+                    sumTemp = 0
+                    for k in range(len(imageBatch)):
+                        sumTemp += error[k][i-1][j]
+                    neuron.setBias(neuron.getBias() - self.getLearningRate() / len(imageBatch) * sumTemp)  
+           
+        #Updating weights
+        for i,layer in enumerate(self.getLayerList()):
+            if(i != len(self.getLayerList())-1):
+                sumTemp = 0
+                for k in range(len(imageBatch)):
+                    sumTemp += (np.array(error[k][i])).dot(np.transpose(activationList[k][i]))
+                weightMatrix[i] = weightMatrix[i] - self.getLearningRate() / len(imageBatch) * sumTemp
+        
     def prediction(self,image):
         """Function which computes in which class the image is, given the image (parameter image). 
         The output is the index of the neuron which gave the greatest value. 
