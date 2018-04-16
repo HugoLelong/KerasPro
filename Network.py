@@ -235,24 +235,36 @@ class Network(object):
         of training images) and the validation data as a tuple (validationImages, validationLabels). 
         If not put, it is None and not taken into account. The outputs is the number of true 
         predictions (for the training set and the validation set) per epoch in two different lists."""
-        imageBatchSize=[]
-        labelBatchSize=[]
         trueGuessList=[]
         trueGuessValList=[]
         for i in range(nbEpochs):
-            while (len(imageBatchSize)<batchSize):
-                n=random.randint(0,len(imageTrainSet)-1)
-                if imageTrainSet[n] not in imageBatchSize:
-                    imageBatchSize.append(imageTrainSet[n])
-                    labelBatchSize.append(labelTrainSet[n])
-            trueGuess=0
-            for j,image in enumerate(imageBatchSize):
-                print(image)
-                self.feedforward(image)
-                if self.prediction(image)==labelBatchSize[j]:
-                    trueGuess+=1
-            self.backpropagate()
-            trueGuessList.append(trueGuess)
+            remainingImageTrainSet = imageTrainSet
+            remainingLabelTrainSet = labelTrainSet
+            
+            #Backprobagate for a batch of image
+            while (len(remainingImageTrainSet) > batchSize):
+                imageBatchList = []
+                labelBatchList = []
+                while (len(imageBatchList)<batchSize):
+                    n=random.randint(0,len(remainingImageTrainSet)-1)
+                    if remainingImageTrainSet[n] not in imageBatchList:
+                        imageBatchList.append(remainingImageTrainSet[n])
+                        labelBatchList.append(remainingLabelTrainSet[n])
+                        del remainingImageTrainSet[n]
+                        del remainingLabelTrainSet[n]
+                #trueGuess=0
+                #for j,image in enumerate(imageBatchList):
+                #    print(image)
+                #    self.feedforward(image)
+                #    if self.prediction(image)==labelBatchList[j]:
+                #        trueGuess+=1
+                self.backpropagate(imageBatchList, labelBatchList)
+                #trueGuessList.append(trueGuess)
+            #Backpropagate for the last batch
+            imageBatchList = remainingImageTrainSet
+            labelBatchList = remainingLabelTrainSet
+            self.backpropagate(imageBatchList, labelBatchList)
+            
             if(validationData!=None):
                 trueGuessVal=0
                 (imageValidationList,labelValidationList)=validationData
